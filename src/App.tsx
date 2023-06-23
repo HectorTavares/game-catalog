@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { Card, SearchInput, Loader } from './components'
-import { Game, errorMessages } from './types'
+import { Game } from './types'
 import { useGamesApi } from './hooks/useGamesApi'
 import { getErrorMessage } from './utils/getErrorMessage'
 
@@ -9,11 +9,9 @@ import './style.scss'
 
 const ALL = 'All'
 
-const errorMessagesInitialValue: errorMessages = { 'pt-br': '', 'en-us': '' }
-
 function App(): JSX.Element {
   const [gameList, setGameList] = useState<Game[]>([])
-  const [errorMessage, setErrorMessage] = useState<errorMessages>(errorMessagesInitialValue)
+  const [errorMessage, setErrorMessage] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const [avaliableGenres, setAvaliableGenres] = useState<string[]>([])
@@ -38,7 +36,7 @@ function App(): JSX.Element {
       newAvaliableGenres.unshift(ALL)
 
       setAvaliableGenres(newAvaliableGenres)
-      setErrorMessage(errorMessagesInitialValue)
+      setErrorMessage('')
     } catch (error: any) {
       if (error.response) {
         setErrorMessage(getErrorMessage(error.response.status))
@@ -115,11 +113,10 @@ function App(): JSX.Element {
         </div>
         <div className='loading-container'>{isLoading ? <Loader /> : null}</div>
 
-        {!isLoading && errorMessage['en-us'].length ? (
+        {!isLoading && errorMessage.length ? (
           <div className='error-container'>
             <div className='error-message'>
-              <p>{errorMessage['en-us']}</p>
-              <p>{errorMessage['pt-br']}</p>
+              <p>{errorMessage}</p>
               <button className='retry-button' onClick={handleOnRetry}>
                 Try again
               </button>

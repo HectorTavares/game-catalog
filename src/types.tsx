@@ -11,8 +11,3 @@ export interface Game {
   release_date: string
   freetogame_profile_url: string
 }
-
-export interface errorMessages {
-  'pt-br': string
-  'en-us': string
-}
