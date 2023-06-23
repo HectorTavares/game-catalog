@@ -16,7 +16,3 @@ export interface errorMessages {
   'pt-br': string
   'en-us': string
 }
-
-export interface GameResponse {
-  data: Game[]
-}
