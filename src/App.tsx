@@ -115,7 +115,7 @@ function App() {
         </div>
         <div className='loading-container'>{isLoading ? <Loader /> : null}</div>
 
-        {errorMessage['en-us'].length ? (
+        {!isLoading && errorMessage['en-us'].length ? (
           <div className='error-container'>
             <div className='error-message'>
               <p>{errorMessage['en-us']}</p>
