@@ -6,12 +6,12 @@
 
 ## Como executar o projeto
 
-Antes de executar o projeto, certifique-se de ter o Node.js e o gerenciador de pacotes Yarn ou Npm instalados em sua máquina.
+Antes de executar o projeto, certifique-se de ter o Node.js e um gerenciador de pacotes (Yarn ou Npm) instalados em sua máquina.
 
 #### 1. Clone este repositório para o seu ambiente local:
 
   ```bash
-   git clone https://github.com/seu-usuario/game-catalog.git
+   git clone https://github.com/HectorTavares/game-catalog.git
   ```
 
 #### 2. Acesse o diretório do projeto:
@@ -47,10 +47,10 @@ O servidor será iniciado e o aplicativo estará disponível em http://localhost
 
 ## Demonstração
 
-Abaixo uma demonstração da página sem a utilização de senhum filto.
+Abaixo está uma demonstração da página sem a utilização de nenhum filtro:
 
-![image](https://github.com/HectorTavares/game-catalog/assets/63106769/67c2dee6-e1d2-4487-bf6d-5b53ce1e388d)
+![Demonstração sem filtro](https://github.com/HectorTavares/game-catalog/assets/63106769/67c2dee6-e1d2-4487-bf6d-5b53ce1e388d)
 
-Abaixo uma demonstração da página utilizando o filtro de genero a opção de Card Game selecionada e de titulo com lEgE.
+Abaixo está uma demonstração da página utilizando o filtro de gênero, com a opção "Card Game" selecionada, e o filtro de título com "lEgE":
 
-![image](https://github.com/HectorTavares/game-catalog/assets/63106769/46d0a9b0-9a69-487e-b025-7008dd829c69)
+![Demonstração com filtro](https://github.com/HectorTavares/game-catalog/assets/63106769/46d0a9b0-9a69-487e-b025-7008dd829c69)
