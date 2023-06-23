@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 export const useGamesApi = () => {
   const axiosInstance: AxiosInstance = axios.create({
@@ -8,7 +8,7 @@ export const useGamesApi = () => {
     },
   })
 
-  const getGames: any = async () => {
+  const getGames = async (): Promise<AxiosResponse> => {
     const url = 'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data'
     const response = await axiosInstance.get(url)
     return response

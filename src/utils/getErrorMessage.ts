@@ -1,4 +1,6 @@
-export const getErrorMessage = (status: any) => {
+import { errorMessages } from '../types'
+
+export const getErrorMessage = (status: any): errorMessages => {
   const timeoutExceeded = 'ECONNABORTED'
   const StatusCodeList = [500, 502, 503, 504, 507, 508, 509]
 

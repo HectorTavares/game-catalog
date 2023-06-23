@@ -17,7 +17,7 @@ export const Card = ({
   genre: string
   link: string
 }) => {
-  const handleOnClick = () => {
+  const handleOnClick = (): void => {
     window.open(link, '_blank')
   }
 

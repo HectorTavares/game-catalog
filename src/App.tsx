@@ -11,18 +11,18 @@ const ALL = 'All'
 
 const errorMessagesInitialValue: errorMessages = { 'pt-br': '', 'en-us': '' }
 
-function App() {
-  const [gameList, setGameList] = useState([])
-  const [errorMessage, setErrorMessage] = useState(errorMessagesInitialValue)
-  const [isLoading, setIsLoading] = useState(true)
+function App(): JSX.Element {
+  const [gameList, setGameList] = useState<Game[]>([])
+  const [errorMessage, setErrorMessage] = useState<errorMessages>(errorMessagesInitialValue)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const [avaliableGenres, setAvaliableGenres] = useState([])
-  const [selectedGenre, setSelectedGenre] = useState(ALL)
-  const [filteredGames, setFilteredGames] = useState([])
-  const [searchText, setSearchText] = useState('')
+  const [avaliableGenres, setAvaliableGenres] = useState<string[]>([])
+  const [selectedGenre, setSelectedGenre] = useState<string>(ALL)
+  const [filteredGames, setFilteredGames] = useState<Game[]>([])
+  const [searchText, setSearchText] = useState<string>('')
   const { getGames } = useGamesApi()
 
-  const fetchGames = async () => {
+  const fetchGames = async (): Promise<void> => {
     try {
       const games = await getGames()
 
@@ -75,7 +75,7 @@ function App() {
     setFilteredGames(newFilteredGames)
   }, [selectedGenre, searchText])
 
-  const handleOnSelectGenre = (genre: string) => {
+  const handleOnSelectGenre = (genre: string): void => {
     if (genre === selectedGenre) {
       setSelectedGenre(ALL)
     } else {
@@ -83,15 +83,15 @@ function App() {
     }
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchText(event.target.value)
   }
 
-  const handleOnReset = () => {
+  const handleOnReset = (): void => {
     setSearchText('')
   }
 
-  const handleOnRetry = () => {
+  const handleOnRetry = (): void => {
     setIsLoading(true)
     fetchGames()
   }
@@ -129,7 +129,7 @@ function App() {
 
         <motion.div layout className='game-list'>
           {filteredGames.map((game: Game) => (
-            <AnimatePresence>
+            <AnimatePresence key={game.id}>
               <Card
                 key={game.id}
                 title={game.title}
