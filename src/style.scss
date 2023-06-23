@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+.app {
+  background-color: #202c36;
+  min-height: 100vh;
+  padding: 20px 50px;
+  min-width: 380px;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 5%;
+    height: 100%;
+
+    > .search-container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+
+    > .available-genres-filter {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      .card-genre {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        p {
+          padding: 6px 12px;
+          background-color: #184461;
+          border-radius: 4px;
+          font-size: 14px;
+          margin-right: 8px;
+        }
+        &.selected {
+          p {
+            background-color: #1d7779;
+          }
+        }
+        &:hover {
+          p {
+            background-color: #1d7779;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    > .loading-container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    > .error-container {
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > .error-message {
+        flex-direction: column;
+        gap: 10px;
+        display: flex;
+        align-items: center;
+        padding: 20px 40px;
+        background-color: #f4e0e3;
+        opacity: 0.9;
+        color: #c0495f;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        > .retry-button {
+          background-color: #c0495f;
+          color: #f4e0e3;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          &:hover {
+            background-color: #9b3a4c;
+            color: #f5e3e5;
+          }
+        }
+      }
+
+      // p {
+
+      // }
+    }
+
+    > .game-list {
+      justify-content: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+    }
+  }
+}
+
+@media (min-width: 1800px) {
+  .app > .container {
+    padding: 0px 15%;
+  }
+}
+
+@media (min-width: 2300px) {
+  .app > .container {
+    padding: 0px 20%;
+  }
+}
+
+@media (min-width: 2680px) {
+  .app > .container {
+    padding: 0px 25%;
+  }
+}
