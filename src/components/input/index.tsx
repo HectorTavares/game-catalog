@@ -7,6 +7,7 @@ export const Input = ({
   isSearch = false,
   text,
   type = 'text',
+  size = 'medium',
 }: {
   onChange: ChangeEventHandler<HTMLInputElement>
   value: string
@@ -14,9 +15,10 @@ export const Input = ({
   isSearch: boolean
   text: string
   type: string
+  size: 'small' | 'medium'
 }) => {
   return (
-    <div className='input-container'>
+    <div className={`input-container ${size} `}>
       {isSearch ? (
         <button disabled>
           <svg

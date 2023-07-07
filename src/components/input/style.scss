@@ -14,8 +14,6 @@
   --border-radius: 30px;
   --after-border-radius: 1px;
   position: relative;
-  // min-width: 300px;
-  // max-width: var(--width-of-input);
   width: var(--width-of-input);
   height: var(--height-of-input);
   display: flex;
@@ -24,6 +22,10 @@
   border-radius: var(--border-radius);
   transition: border-radius 0.5s ease;
   background: var(--input-bg, #fff);
+
+  &.small {
+    width: 300px;
+  }
 
   &:before {
     content: '';

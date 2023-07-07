@@ -1,8 +1,8 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Card, Input, Loader } from '@/components'
-import { Game } from '@/types'
-import { useGamesApi } from '@/hooks'
-import { getErrorMessage } from '@/utils'
+import { Card, Input, Loader } from '../../components'
+import { Game } from '../../types'
+import { useGamesApi } from '../../hooks'
+import { getGamesErrorMessage } from '../../utils'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import './style.scss'
@@ -39,9 +39,9 @@ function App(): JSX.Element {
       setErrorMessage('')
     } catch (error: any) {
       if (error.response) {
-        setErrorMessage(getErrorMessage(error.response.status))
+        setErrorMessage(getGamesErrorMessage(error.response.status))
       } else {
-        setErrorMessage(getErrorMessage(error.code))
+        setErrorMessage(getGamesErrorMessage(error.code))
       }
     } finally {
       setIsLoading(false)
@@ -104,6 +104,8 @@ function App(): JSX.Element {
             value={searchText}
             onChange={handleChange}
             onReset={handleOnReset}
+            size='medium'
+            type='text'
           />
         </div>
         <div className='available-genres-filter'>

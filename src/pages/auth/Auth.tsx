@@ -1,15 +1,20 @@
 import React, { useState, FormEvent } from 'react'
-import { Input } from '@/components'
+import { Input } from '../../components'
 
-import { useFirebase } from '@/hooks'
+import { useFirebase } from '../../hooks/'
+import { useNavigate } from 'react-router-dom'
+
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { getAuthErrorMessage } from '../../utils'
 
 import './style.scss'
 
 export const Auth: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
   const [isLogin, setIsLogin] = useState(true)
+  const navigate = useNavigate()
 
   const { createUser, login } = useFirebase()
 
@@ -17,9 +22,10 @@ export const Auth: React.FC = () => {
     try {
       const user = await login(email, password)
       console.log(user)
+      navigate('/')
       //salvar infos e redirecionar
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error(getAuthErrorMessage(error.code))
     }
   }
 
@@ -27,8 +33,9 @@ export const Auth: React.FC = () => {
     try {
       const user = await createUser(email, password)
       console.log(user)
-    } catch (error) {
-      console.log(error)
+      navigate('/')
+    } catch (error: any) {
+      toast.error(getAuthErrorMessage(error.code))
     }
   }
 
@@ -45,31 +52,48 @@ export const Auth: React.FC = () => {
   return (
     <main className='auth'>
       <div className='container'>
-        <h1>{isLogin ? 'Login' : 'Register'}</h1>
+        <div className='auth-options'>
+          <button
+            onClick={() => setIsLogin(true)}
+            className={`option ${isLogin ? 'selected' : ''}`}
+          >
+            Sign in
+          </button>
+          <button
+            onClick={() => setIsLogin(false)}
+            className={`option ${isLogin ? '' : 'selected'}`}
+          >
+            Sign up
+          </button>
+        </div>
+
         <form className='auth-form' onSubmit={handleSubmit}>
           <Input
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+              setEmail(e.target.value)
+            }
             value={email}
             isSearch={false}
             onReset={() => setEmail('')}
             text='E-mail'
             type='email'
+            size='small'
           />
           <Input
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+              setPassword(e.target.value)
+            }
             type='password'
             value={password}
             onReset={() => setPassword('')}
             isSearch={false}
             text='Password'
+            size='small'
           />
 
           <button className='button' type='submit'>
-            {isLogin ? 'Login' : 'Register'}
+            {isLogin ? 'Sign in' : 'Sign up'}
           </button>
-          <p onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? "Don't have an account? register" : 'Already have an account? login'}
-          </p>
         </form>
       </div>
     </main>

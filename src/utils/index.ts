@@ -1,1 +1,1 @@
-export { getErrorMessage } from './getErrorMessage'
+export { getGamesErrorMessage, getAuthErrorMessage } from './getErrorMessage'

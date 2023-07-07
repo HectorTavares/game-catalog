@@ -1,4 +1,4 @@
-export const getErrorMessage = (status: any): string => {
+export const getGamesErrorMessage = (status: any): string => {
   const timeoutExceeded = 'ECONNABORTED'
   const StatusCodeList = [500, 502, 503, 504, 507, 508, 509]
 
@@ -11,4 +11,12 @@ export const getErrorMessage = (status: any): string => {
   }
 
   return 'The server will not be able to respond for now, please try to come back later.'
+}
+
+export const getAuthErrorMessage = (message: string): string => {
+  const newString = message.replace('auth/', '')
+
+  const result = newString.replace(/-/g, ' ')
+
+  return result
 }
