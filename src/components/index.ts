@@ -1,3 +1,3 @@
 export { Card } from './card'
-export { SearchInput } from './search-input'
+export { Input } from './input'
 export { Loader } from './loader'

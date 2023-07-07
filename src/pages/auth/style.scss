@@ -1,0 +1,31 @@
+@import '@/styles/style.scss';
+
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: $secondary-color;
+  > .container {
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-color;
+    padding: 25px;
+    border-radius: $border-radius;
+    > .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      > .button {
+        background-color: $button-color;
+        border-radius: $border-radius;
+        border: none;
+        padding: 10px 20px;
+      }
+    }
+  }
+}

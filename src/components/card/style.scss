@@ -1,13 +1,12 @@
+@import '@/styles/style.scss';
+
 .card {
   display: flex;
   flex-direction: column;
   width: 365px;
   border-radius: 10px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  background-color: #2a3944;
-
-  //main color = #202c36;
-  //secondary color = #2a3944;;
+  background-color: $secondary-color;
 
   .card-image {
     border-radius: 10px 10px 0px 0px;
@@ -47,7 +46,7 @@
         margin-top: 16px;
         p {
           padding: 6px 12px;
-          background-color: #184461;
+          background-color: $button-color;
           border-radius: 4px;
           font-size: 14px;
           margin-right: 8px;

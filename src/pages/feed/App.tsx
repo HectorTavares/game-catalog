@@ -1,8 +1,8 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Card, SearchInput, Loader } from './components'
-import { Game } from './types'
-import { useGamesApi } from './hooks/useGamesApi'
-import { getErrorMessage } from './utils/getErrorMessage'
+import { Card, Input, Loader } from '@/components'
+import { Game } from '@/types'
+import { useGamesApi } from '@/hooks'
+import { getErrorMessage } from '@/utils'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import './style.scss'
@@ -95,10 +95,16 @@ function App(): JSX.Element {
   }
 
   return (
-    <section className='app'>
+    <main className='app'>
       <div className='container'>
         <div className='search-container'>
-          <SearchInput value={searchText} onChange={handleChange} onReset={handleOnReset} />
+          <Input
+            isSearch={true}
+            text={'Search'}
+            value={searchText}
+            onChange={handleChange}
+            onReset={handleOnReset}
+          />
         </div>
         <div className='available-genres-filter'>
           {avaliableGenres.map((genre) => (
@@ -141,7 +147,7 @@ function App(): JSX.Element {
           ))}
         </motion.div>
       </div>
-    </section>
+    </main>
   )
 }
 

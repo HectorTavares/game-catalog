@@ -1,3 +1,5 @@
+@import '@/styles/style.scss';
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -6,7 +8,7 @@
 }
 
 .app {
-  background-color: #202c36;
+  background-color: $primary-color;
   min-height: 100vh;
   padding: 20px 50px;
   min-width: 380px;
@@ -34,19 +36,19 @@
         margin-top: 16px;
         p {
           padding: 6px 12px;
-          background-color: #184461;
+          background-color: $button-color;
           border-radius: 4px;
           font-size: 14px;
           margin-right: 8px;
         }
         &.selected {
           p {
-            background-color: #1d7779;
+            background-color: $button-hover;
           }
         }
         &:hover {
           p {
-            background-color: #1d7779;
+            background-color: $button-hover;
             cursor: pointer;
           }
         }

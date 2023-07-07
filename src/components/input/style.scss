@@ -1,10 +1,10 @@
-.form button {
+.input-container button {
   border: none;
   background: none;
   color: #8b8ba7;
 }
 
-.form {
+.input-container {
   --timing: 0.3s;
   --width-of-input: 500px;
   --height-of-input: 40px;
@@ -14,6 +14,8 @@
   --border-radius: 30px;
   --after-border-radius: 1px;
   position: relative;
+  // min-width: 300px;
+  // max-width: var(--width-of-input);
   width: var(--width-of-input);
   height: var(--height-of-input);
   display: flex;
