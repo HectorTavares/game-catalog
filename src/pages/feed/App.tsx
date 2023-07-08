@@ -143,8 +143,10 @@ function App(): JSX.Element {
                 platform={game.platform}
                 publisher={game.publisher}
                 genre={game.genre}
-                link={game.game_url}
+                isFavorited={false}
+                avaliation={0}
               />
+              {/* default config to build */}
             </AnimatePresence>
           ))}
         </motion.div>

@@ -11,7 +11,7 @@ export const Card = ({
   platform,
   publisher,
   genre,
-  link,
+  // link,
   isFavorited = false,
   avaliation = 2.5,
 }: {
@@ -21,7 +21,7 @@ export const Card = ({
   platform: string
   publisher: string
   genre: string
-  link: string
+  // link: string
   isFavorited: boolean
   avaliation: number
 }) => {

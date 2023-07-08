@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Rating from '@mui/material/Rating'
 import './style.scss'
 export const Avaliation = ({ avaliation }: { avaliation: number }) => {
@@ -17,7 +17,7 @@ export const Avaliation = ({ avaliation }: { avaliation: number }) => {
         className={`rating ${isLoading ? 'avaliated' : ''}`}
         name='rating'
         value={value}
-        onChange={(event, newValue) => {
+        onChange={(_event, newValue) => {
           setValue(newValue)
           toggleRating()
         }}
