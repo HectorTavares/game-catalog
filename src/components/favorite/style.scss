@@ -1,0 +1,41 @@
+.favorite-button {
+  all: unset;
+  color: rgb(128, 38, 38);
+
+  &.favorited {
+    animation: favorited 1s linear;
+  }
+}
+@keyframes favorited {
+  0% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(1.1);
+    color: rgb(160, 39, 39);
+  }
+  25% {
+    transform: scale(0.9);
+    color: rgb(97, 39, 39);
+  }
+  37% {
+    transform: scale(1.2);
+    color: rgb(160, 39, 39);
+  }
+  50% {
+    transform: scale(0.9);
+    color: rgb(97, 39, 39);
+  }
+  62% {
+    transform: scale(1.2);
+    color: rgb(160, 39, 39);
+  }
+  75% {
+    transform: scale(0.9);
+    color: rgb(97, 39, 39);
+  }
+  100% {
+    transform: scale(1);
+    color: rgb(128, 38, 38);
+  }
+}

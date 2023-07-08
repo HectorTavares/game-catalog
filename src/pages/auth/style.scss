@@ -50,6 +50,12 @@
         border: none;
         padding: 10px 20px;
         width: 300px;
+        > .loader {
+          height: unset;
+          > .loader-dot {
+            background-color: $primary-color;
+          }
+        }
       }
     }
   }

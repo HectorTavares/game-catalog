@@ -1,5 +1,9 @@
 import './style.scss'
 import { motion } from 'framer-motion'
+
+import { FavoriteButton } from '../../components/favorite'
+import { Avaliation } from '../avaliation'
+
 export const Card = ({
   title,
   image,
@@ -8,6 +12,8 @@ export const Card = ({
   publisher,
   genre,
   link,
+  isFavorited = false,
+  avaliation = 2.5,
 }: {
   title: string
   image: string
@@ -16,10 +22,12 @@ export const Card = ({
   publisher: string
   genre: string
   link: string
+  isFavorited: boolean
+  avaliation: number
 }) => {
-  const handleOnClick = (): void => {
-    window.open(link, '_blank')
-  }
+  // const handleOnClick = (): void => {
+  //   window.open(link, '_blank')
+  // }
 
   return (
     <motion.div
@@ -29,7 +37,7 @@ export const Card = ({
       transition={{ duration: 0.5 }}
       layout
       className='card'
-      onClick={handleOnClick}
+      // onClick={handleOnClick}
     >
       <img className='card-image' src={image} alt={`${title} thumbnail`} />
       <div className='card-content'>
@@ -43,6 +51,10 @@ export const Card = ({
           <div className='card-genre'>
             <p>{genre}</p>
           </div>
+        </div>
+        <div className='card-options'>
+          <Avaliation avaliation={avaliation} />
+          <FavoriteButton value={isFavorited} />
         </div>
       </div>
     </motion.div>

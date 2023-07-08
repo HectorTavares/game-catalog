@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from 'react'
-import { Input } from '../../components'
+import { Input, Loader } from '../../components'
 
 import { useFirebase } from '../../hooks/'
 import { useNavigate } from 'react-router-dom'
@@ -11,14 +11,16 @@ import { getAuthErrorMessage } from '../../utils'
 import './style.scss'
 
 export const Auth: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isLogin, setIsLogin] = useState(true)
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [isLogin, setIsLogin] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const { createUser, login } = useFirebase()
 
   const loginAction = async () => {
+    setIsLoading(true)
     try {
       const user = await login(email, password)
       console.log(user)
@@ -26,16 +28,23 @@ export const Auth: React.FC = () => {
       //salvar infos e redirecionar
     } catch (error: any) {
       toast.error(getAuthErrorMessage(error.code))
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const registerAction = async () => {
+    setIsLoading(true)
     try {
       const user = await createUser(email, password)
       console.log(user)
       navigate('/')
     } catch (error: any) {
-      toast.error(getAuthErrorMessage(error.code))
+      console.log(error)
+
+      toast.error('getAuthErrorMessage(error.code)')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -91,8 +100,8 @@ export const Auth: React.FC = () => {
             size='small'
           />
 
-          <button className='button' type='submit'>
-            {isLogin ? 'Sign in' : 'Sign up'}
+          <button disabled={isLoading} className='button' type='submit'>
+            {isLoading ? <Loader /> : isLogin ? 'Sign in' : 'Sign up'}
           </button>
         </form>
       </div>
