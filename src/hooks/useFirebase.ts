@@ -1,8 +1,8 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/auth'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-
-import { getFirestore, doc, setDoc } from 'firebase/firestore'
+import { firebaseGame } from '../types'
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
 
 export const useFirebase = () => {
   const firebaseConfig = {
@@ -21,11 +21,9 @@ export const useFirebase = () => {
   const createUser = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
 
-    const userID = auth.currentUser!.uid
+    const userID = getUserId()
 
-    console.log(userID)
-
-    await setDoc(doc(db, 'users', userID), {
+    await setDoc(doc(db, 'users', userID!), {
       games: [],
     })
 
@@ -39,7 +37,43 @@ export const useFirebase = () => {
   }
 
   const getUserId = () => {
-    return auth.currentUser!.uid || null
+    try {
+      const user = auth.currentUser!
+
+      const userID = user.uid
+
+      return userID
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }
+
+  const getUserInfo = async () => {
+    const userID = getUserId()
+
+    const docRef = doc(db, 'users', userID!)
+
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      return docSnap.data()
+    }
+    return null
+  }
+
+  const updateUserInfo = async (games: firebaseGame[]) => {
+    const userID = getUserId()
+
+    console.log(userID)
+
+    await setDoc(doc(db, 'users', userID!), {
+      games: games,
+    })
+  }
+
+  const logout = async () => {
+    await auth.signOut()
   }
 
   return {
@@ -47,5 +81,8 @@ export const useFirebase = () => {
     login,
     app,
     getUserId,
+    getUserInfo,
+    updateUserInfo,
+    logout,
   }
 }

@@ -1,18 +1,34 @@
 import { useState } from 'react'
+import { useFirebase } from '../../hooks'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import './style.scss'
 
-export const FavoriteButton = ({ value }: { value: boolean }) => {
+export const FavoriteButton = ({
+  value,
+  onFavorite,
+  handleOpenModal,
+}: {
+  value: boolean
+  onFavorite: (value: boolean) => void
+  handleOpenModal: () => void
+}) => {
   const [isFavorite, setIsFavorite] = useState(value)
   const [isLoading, setIsLoading] = useState(false)
+  const { getUserId } = useFirebase()
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite)
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    const id = getUserId()
+    if (id) {
+      onFavorite(!isFavorite)
+      setIsFavorite(!isFavorite)
+      setIsLoading(true)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 3000)
+    } else {
+      handleOpenModal()
+    }
   }
 
   return (

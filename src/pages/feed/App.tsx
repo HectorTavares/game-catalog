@@ -1,10 +1,15 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Card, Input, Loader } from '../../components'
-import { Game } from '../../types'
+import { Card, Input, Loader, SortFilter } from '../../components'
+import { Game, firebaseGame, ratingSort, defaultRatingSortValues } from '../../types'
 import { useGamesApi } from '../../hooks'
-import { getGamesErrorMessage } from '../../utils'
+import { getGamesErrorMessage, parseFirebaseGameListToGameList } from '../../utils'
+import { useFirebase } from '../../hooks'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import Tooltip from '@mui/material/Tooltip'
+import Modal from '@mui/material/Modal'
+import LogoutIcon from '@mui/icons-material/Logout'
+import { useNavigate } from 'react-router-dom'
+
 import './style.scss'
 
 const ALL = 'All'
@@ -18,15 +23,65 @@ function App(): JSX.Element {
   const [selectedGenre, setSelectedGenre] = useState<string>(ALL)
   const [filteredGames, setFilteredGames] = useState<Game[]>([])
   const [searchText, setSearchText] = useState<string>('')
+  const [isFavoriteFilter, setIsFavoriteFilter] = useState<boolean>(false)
+  const [ratingSort, setRatingSort] = useState<ratingSort>(defaultRatingSortValues)
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+  const handleOpen = () => setModalIsOpen(true)
+  const handleClose = () => setModalIsOpen(false)
+
   const { getGames } = useGamesApi()
+  const { getUserInfo, updateUserInfo, logout, getUserId } = useFirebase()
+  const navigate = useNavigate()
+
+  const fetchUserInfos = async () => {
+    const userId = getUserId()
+    if (userId) {
+      const user = await getUserInfo()
+      return user!.games
+    }
+    return []
+  }
+
+  const updateUserInformation = async (updatedGame: firebaseGame) => {
+    const gameListToSave: firebaseGame[] = [updatedGame]
+    gameList.forEach((game: Game) => {
+      if (game.isFavorited || game.rating) {
+        gameListToSave.push({
+          isFavorited: game.isFavorited,
+          gameId: game.id,
+          rating: game.rating,
+        })
+      }
+    })
+
+    try {
+      await updateUserInfo(gameListToSave)
+
+      const updatedGameList = parseFirebaseGameListToGameList(gameListToSave, gameList)
+
+      setGameList(updatedGameList)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const fetchGames = async (): Promise<void> => {
     try {
-      const games = await getGames()
+      const gamesPromise = getGames() // Requisição para obter os jogos
+      const userGamesPromise = fetchUserInfos() // Requisição para obter informações do usuário
 
-      setGameList(games.data)
-      setFilteredGames(games.data)
-      const newAvaliableGenres = games.data
+      const [games, userGames] = await Promise.all([gamesPromise, userGamesPromise])
+      let gamesToSave = games.data
+
+      if (userGames) {
+        gamesToSave = parseFirebaseGameListToGameList(userGames, games.data)
+      } else {
+        gamesToSave = parseFirebaseGameListToGameList([], games.data)
+      }
+
+      setGameList(gamesToSave)
+      setFilteredGames(gamesToSave)
+      const newAvaliableGenres = gamesToSave
         .map((game: Game) => game.genre)
         .filter(function (elem: string, pos: number, self: string | string[]) {
           return self.indexOf(elem) == pos
@@ -50,6 +105,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     fetchGames()
+    fetchUserInfos()
     return () => {
       setGameList([])
     }
@@ -58,10 +114,12 @@ function App(): JSX.Element {
   useEffect(() => {
     let newFilteredGames = [...gameList]
 
-    if (selectedGenre === ALL) {
-      newFilteredGames = gameList
-    } else {
+    if (selectedGenre !== ALL) {
       newFilteredGames = newFilteredGames.filter((game: Game) => game.genre === selectedGenre)
+    }
+
+    if (isFavoriteFilter) {
+      newFilteredGames = newFilteredGames.filter((game: Game) => game.isFavorited)
     }
 
     if (searchText.length) {
@@ -70,8 +128,25 @@ function App(): JSX.Element {
       )
     }
 
+    if (ratingSort.isActivated) {
+      newFilteredGames = newFilteredGames.sort((a: Game, b: Game) => {
+        if (a.rating > b.rating) {
+          return ratingSort.isDesc ? -1 : 1
+        } else {
+          return ratingSort.isDesc ? 1 : -1
+        }
+      })
+    }
+
     setFilteredGames(newFilteredGames)
-  }, [selectedGenre, searchText])
+  }, [
+    selectedGenre,
+    searchText,
+    gameList,
+    isFavoriteFilter,
+    ratingSort.isActivated,
+    ratingSort.isDesc,
+  ])
 
   const handleOnSelectGenre = (genre: string): void => {
     if (genre === selectedGenre) {
@@ -94,8 +169,21 @@ function App(): JSX.Element {
     fetchGames()
   }
 
+  const handleLogoff = (): void => {
+    logout()
+    location.reload()
+  }
+
   return (
     <main className='app'>
+      <Modal open={modalIsOpen} onClose={handleClose}>
+        <div className='modal'>
+          <p>To favorite or rate, you need to be logged in.</p>
+          <div className='modal-buttons'>
+            <button onClick={() => navigate('/auth')}>Login</button>
+          </div>
+        </div>
+      </Modal>
       <div className='container'>
         <div className='search-container'>
           <Input
@@ -107,17 +195,36 @@ function App(): JSX.Element {
             size='medium'
             type='text'
           />
+          <button className='logout-button' onClick={handleLogoff} type='button'>
+            <LogoutIcon />
+          </button>
         </div>
-        <div className='available-genres-filter'>
-          {avaliableGenres.map((genre) => (
-            <div
-              key={genre}
-              onClick={() => handleOnSelectGenre(genre)}
-              className={`card-genre ${selectedGenre === genre ? 'selected' : ''}`}
-            >
-              <p>{genre}</p>
-            </div>
-          ))}
+        <div className='filters'>
+          <div className='favorite-and-sort-filters'>
+            <Tooltip title='Filter only Favorited Games'>
+              <div
+                onClick={() => setIsFavoriteFilter(!isFavoriteFilter)}
+                className={`card-genre favorite-filter ${isFavoriteFilter ? 'selected' : ''}`}
+              >
+                <p>Favorited</p>
+              </div>
+            </Tooltip>
+            <SortFilter value={ratingSort} setRatingSort={setRatingSort} />
+          </div>
+
+          <div className='available-genres-filter'>
+            {avaliableGenres.map((genre) => (
+              <Tooltip key={genre} title={`Filter only games that are of genre ${genre}`}>
+                <div
+                  key={genre}
+                  onClick={() => handleOnSelectGenre(genre)}
+                  className={`card-genre ${selectedGenre === genre ? 'selected' : ''}`}
+                >
+                  <p>{genre}</p>
+                </div>
+              </Tooltip>
+            ))}
+          </div>
         </div>
         <div className='loading-container'>{isLoading ? <Loader /> : null}</div>
 
@@ -132,24 +239,24 @@ function App(): JSX.Element {
           </div>
         ) : null}
 
-        <motion.div layout className='game-list'>
+        <div className='game-list'>
           {filteredGames.map((game: Game) => (
-            <AnimatePresence key={game.id}>
-              <Card
-                key={game.id}
-                title={game.title}
-                image={game.thumbnail}
-                description={game.short_description}
-                platform={game.platform}
-                publisher={game.publisher}
-                genre={game.genre}
-                isFavorited={false}
-                avaliation={0}
-              />
-              {/* default config to build */}
-            </AnimatePresence>
+            <Card
+              key={game.id}
+              gameId={game.id}
+              title={game.title}
+              image={game.thumbnail}
+              description={game.short_description}
+              platform={game.platform}
+              publisher={game.publisher}
+              genre={game.genre}
+              isFavorited={game.isFavorited}
+              avaliation={game.rating}
+              onRateOrFavorite={updateUserInformation}
+              handleOpenModal={handleOpen}
+            />
           ))}
-        </motion.div>
+        </div>
       </div>
     </main>
   )

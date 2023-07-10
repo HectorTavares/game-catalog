@@ -11,7 +11,7 @@
   background-color: $primary-color;
   min-height: 100vh;
   padding: 20px 50px;
-  min-width: 380px;
+  min-width: 320px;
 
   .container {
     display: flex;
@@ -24,32 +24,77 @@
       display: flex;
       width: 100%;
       justify-content: center;
+      .logout-button {
+        all: unset;
+        position: absolute;
+        right: 2%;
+        top: 28px;
+        cursor: pointer;
+        &:hover {
+          color: $button-hover;
+        }
+      }
     }
-
-    > .available-genres-filter {
+    .filters {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
-      .card-genre {
+      background-color: $secondary-color;
+      padding: 10px;
+      border-radius: $border-radius;
+
+      .favorite-and-sort-filters {
         display: flex;
-        align-items: center;
-        margin-top: 16px;
-        p {
-          padding: 6px 12px;
-          background-color: $button-color;
-          border-radius: 4px;
-          font-size: 14px;
-          margin-right: 8px;
-        }
-        &.selected {
+        gap: 10px;
+        flex-direction: column;
+        .favorite-filter {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
           p {
-            background-color: $button-hover;
+            padding: 6px 12px;
+            width: 100px;
+            height: 44px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #5d2d31;
+          }
+          &.selected {
+            p {
+              background-color: rgb(128, 38, 38);
+            }
           }
         }
-        &:hover {
+      }
+      .available-genres-filter {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        .card-genre {
+          display: flex;
+          align-items: center;
+
           p {
-            background-color: $button-hover;
-            cursor: pointer;
+            padding: 6px 12px;
+            background-color: $button-color;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 8px;
+          }
+          &.selected {
+            p {
+              background-color: $button-hover;
+            }
+          }
+          &:hover {
+            p {
+              background-color: $button-hover;
+              cursor: pointer;
+            }
           }
         }
       }
@@ -100,6 +145,43 @@
       flex-wrap: wrap;
       gap: 30px;
       margin-top: 20px;
+    }
+  }
+}
+
+.modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  top: 50%;
+  left: 50%;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  height: 200px;
+  border-radius: $border-radius;
+  background-color: $secondary-color;
+
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  > .modal-buttons {
+    display: flex;
+    gap: 10px;
+    > button {
+      display: flex;
+      align-items: center;
+      border: unset;
+      padding: 6px 12px;
+      background-color: $button-color;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-right: 8px;
+      &:hover {
+        background-color: $button-hover;
+        cursor: pointer;
+      }
     }
   }
 }

@@ -1,12 +1,24 @@
 import { useState } from 'react'
 import Rating from '@mui/material/Rating'
 import './style.scss'
-export const Avaliation = ({ avaliation }: { avaliation: number }) => {
+import { useFirebase } from '../../hooks'
+export const Avaliation = ({
+  avaliation = 0,
+  onAvaliate,
+  handleOpenModal,
+}: {
+  avaliation: number
+  onAvaliate: (value: number) => void
+  handleOpenModal: () => void
+}) => {
   const [value, setValue] = useState<number | null>(avaliation)
   const [isLoading, setIsLoading] = useState(false)
+  const { getUserId } = useFirebase()
 
-  const toggleRating = () => {
+  const toggleRating = async (newValue: number | null) => {
     setIsLoading(true)
+    setValue(newValue)
+    onAvaliate(newValue!)
     setTimeout(() => {
       setIsLoading(false)
     }, 3000)
@@ -18,8 +30,12 @@ export const Avaliation = ({ avaliation }: { avaliation: number }) => {
         name='rating'
         value={value}
         onChange={(_event, newValue) => {
-          setValue(newValue)
-          toggleRating()
+          const id = getUserId()
+          if (id) {
+            toggleRating(newValue)
+          } else {
+            handleOpenModal()
+          }
         }}
         precision={0.5}
       />
