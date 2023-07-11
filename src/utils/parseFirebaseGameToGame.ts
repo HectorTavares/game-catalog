@@ -4,8 +4,6 @@ export const parseFirebaseGameListToGameList = (
   firebaseGames: firebaseGame[],
   gamesList: Game[]
 ) => {
-  // testar se ta mapeando corretamente
-
   const result: Game[] = gamesList.map((game) => {
     const gameReference = firebaseGames.find((firebaseGame) => firebaseGame.gameId === game.id)
 
@@ -22,6 +20,8 @@ export const parseFirebaseGameListToGameList = (
       rating: 0,
     }
   })
+
+  console.log(result)
 
   return result
 }

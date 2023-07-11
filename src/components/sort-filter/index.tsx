@@ -17,7 +17,7 @@ export const SortFilter = ({
         title={`${value.isActivated ? 'Disable sorting by rating ' : 'Enable  sorting by rating'}`}
       >
         <button
-          className={`sort-activation ${value.isActivated ? 'selected' : ''}`}
+          className={`sort-activation sort-button ${value.isActivated ? 'selected' : ''}`}
           onClick={() => setRatingSort({ ...value, isActivated: !value.isActivated })}
         >
           {value.isActivated ? 'On' : 'Off'}
@@ -29,7 +29,7 @@ export const SortFilter = ({
         }`}
       >
         <button
-          className={`sort-direction ${value.isActivated ? 'selected' : ''}`}
+          className={`sort-direction sort-button ${value.isActivated ? 'selected' : ''}`}
           disabled={!value.isActivated}
           onClick={() => setRatingSort({ ...value, isDesc: !value.isDesc })}
         >

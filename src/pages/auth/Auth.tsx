@@ -22,10 +22,8 @@ export const Auth: React.FC = () => {
   const loginAction = async () => {
     setIsLoading(true)
     try {
-      const user = await login(email, password)
-      console.log(user)
+      await login(email, password)
       navigate('/')
-      //salvar infos e redirecionar
     } catch (error: any) {
       toast.error(getAuthErrorMessage(error.code))
     } finally {
@@ -36,13 +34,12 @@ export const Auth: React.FC = () => {
   const registerAction = async () => {
     setIsLoading(true)
     try {
-      const user = await createUser(email, password)
-      console.log(user)
+      await createUser(email, password)
       navigate('/')
     } catch (error: any) {
-      console.log(error)
+      console.error(error)
 
-      toast.error('getAuthErrorMessage(error.code)')
+      toast.error(getAuthErrorMessage(error.code))
     } finally {
       setIsLoading(false)
     }

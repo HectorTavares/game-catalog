@@ -12,7 +12,7 @@ export const Card = ({
   platform,
   publisher,
   genre,
-  // link,
+  link,
   gameId,
   isFavorited = false,
   avaliation = 2.5,
@@ -25,18 +25,16 @@ export const Card = ({
   platform: string
   publisher: string
   genre: string
-  // link: string
+  link: string
   gameId: number
   isFavorited: boolean
   avaliation: number
   onRateOrFavorite: (updatedGame: firebaseGame) => void
   handleOpenModal: () => void
 }) => {
-  // const handleOnClick = (): void => {
-  //   window.open(link, '_blank')
-  // }
-
-  // const handleUpdateUserGamesList = () => {}
+  const handleOnClick = (): void => {
+    window.open(link, '_blank')
+  }
 
   const handleOnAvaliate = (value: number): void => {
     const updatedGame: firebaseGame = {
@@ -66,9 +64,8 @@ export const Card = ({
       transition={{ duration: 0.4 }}
       layout
       className='card'
-      // onClick={handleOnClick}
     >
-      <img className='card-image' src={image} alt={`${title} thumbnail`} />
+      <img onClick={handleOnClick} className='card-image' src={image} alt={`${title} thumbnail`} />
       <div className='card-content'>
         <h1 className='card-title'>{title}</h1>
         <p className='card-description'>{description}</p>

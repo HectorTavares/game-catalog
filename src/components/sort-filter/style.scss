@@ -3,16 +3,21 @@
 .sort-filter {
   display: flex;
   width: 100px;
-
-  > .sort-activation {
-    width: 60px;
-    border-radius: 4px 0px 0px 4px;
+  .sort-button {
     border: none;
     padding: 10px;
     background-color: $button-color;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+  }
+
+  > .sort-activation {
+    width: 60px;
+    border-radius: 4px 0px 0px 4px;
+
+    cursor: pointer;
     &.selected {
       background-color: $button-hover;
     }
@@ -20,13 +25,7 @@
   > .sort-direction {
     width: 40px;
     border-radius: 0px 4px 4px 0px;
-    border: none;
-    padding: 10px;
-    background-color: $button-color;
-    border-left: 1px solid $button-hover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;

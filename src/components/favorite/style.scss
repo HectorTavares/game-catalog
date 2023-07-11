@@ -1,9 +1,10 @@
 .favorite-button {
   all: unset;
   color: rgb(128, 38, 38);
+  cursor: pointer;
 
   &.favorited {
-    animation: favorited 1s linear;
+    animation: favorited 2s linear;
   }
 }
 @keyframes favorited {

@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import App from './pages/feed/App.tsx'
 import { Auth } from './pages/auth/Auth.tsx'
-import './index.css'
+import './index.scss'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 

@@ -3,18 +3,23 @@
 .card {
   display: flex;
   flex-direction: column;
-  width: 365px;
+  min-width: 310px;
+  max-width: 365px;
+
   border-radius: 10px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   background-color: $secondary-color;
 
   .card-image {
     border-radius: 10px 10px 0px 0px;
-    width: 365px;
+    width: 100%;
     aspect-ratio: auto 365 / 206;
     height: 206px;
     object-fit: cover;
     object-position: center;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .card-content {
     display: flex;
@@ -63,6 +68,5 @@
 }
 
 .card:hover {
-  cursor: pointer;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }

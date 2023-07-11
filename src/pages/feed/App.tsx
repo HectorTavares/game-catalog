@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Card, Input, Loader, SortFilter } from '../../components'
+import { Input, Loader, SortFilter } from '../../components'
 import { Game, firebaseGame, ratingSort, defaultRatingSortValues } from '../../types'
 import { useGamesApi } from '../../hooks'
 import { getGamesErrorMessage, parseFirebaseGameListToGameList } from '../../utils'
@@ -9,6 +9,8 @@ import Tooltip from '@mui/material/Tooltip'
 import Modal from '@mui/material/Modal'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from 'react-router-dom'
+
+import { MyList } from '../../components/game-list'
 
 import './style.scss'
 
@@ -33,6 +35,7 @@ function App(): JSX.Element {
   const { getUserInfo, updateUserInfo, logout, getUserId } = useFirebase()
   const navigate = useNavigate()
 
+  const userId = localStorage.getItem('uid')
   const fetchUserInfos = async () => {
     const userId = getUserId()
     if (userId) {
@@ -61,7 +64,7 @@ function App(): JSX.Element {
 
       setGameList(updatedGameList)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -105,7 +108,6 @@ function App(): JSX.Element {
 
   useEffect(() => {
     fetchGames()
-    fetchUserInfos()
     return () => {
       setGameList([])
     }
@@ -195,9 +197,13 @@ function App(): JSX.Element {
             size='medium'
             type='text'
           />
-          <button className='logout-button' onClick={handleLogoff} type='button'>
-            <LogoutIcon />
-          </button>
+          {userId ? (
+            <Tooltip title='Logout'>
+              <button className='logout-button' onClick={handleLogoff} type='button'>
+                <LogoutIcon />
+              </button>
+            </Tooltip>
+          ) : null}
         </div>
         <div className='filters'>
           <div className='favorite-and-sort-filters'>
@@ -238,25 +244,11 @@ function App(): JSX.Element {
             </div>
           </div>
         ) : null}
-
-        <div className='game-list'>
-          {filteredGames.map((game: Game) => (
-            <Card
-              key={game.id}
-              gameId={game.id}
-              title={game.title}
-              image={game.thumbnail}
-              description={game.short_description}
-              platform={game.platform}
-              publisher={game.publisher}
-              genre={game.genre}
-              isFavorited={game.isFavorited}
-              avaliation={game.rating}
-              onRateOrFavorite={updateUserInformation}
-              handleOpenModal={handleOpen}
-            />
-          ))}
-        </div>
+        <MyList
+          filteredGames={filteredGames}
+          onRateOrFavorite={updateUserInformation}
+          handleOpenModal={handleOpen}
+        />
       </div>
     </main>
   )

@@ -19,21 +19,23 @@ export const useFirebase = () => {
   const db = getFirestore(app)
 
   const createUser = async (email: string, password: string) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
 
     const userID = getUserId()
+
+    localStorage.setItem('uid', userID!)
 
     await setDoc(doc(db, 'users', userID!), {
       games: [],
     })
-
-    return userCredential
   }
 
   const login = async (email: string, password: string) => {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password)
-    console.log(auth.currentUser)
-    return userCredential
+    await signInWithEmailAndPassword(auth, email, password)
+
+    const userID = getUserId()
+
+    localStorage.setItem('uid', userID!)
   }
 
   const getUserId = () => {
@@ -44,13 +46,12 @@ export const useFirebase = () => {
 
       return userID
     } catch (error) {
-      console.error(error)
-      return null
+      return localStorage.getItem('uid')
     }
   }
 
   const getUserInfo = async () => {
-    const userID = getUserId()
+    const userID = getUserId() || localStorage.getItem('uid')
 
     const docRef = doc(db, 'users', userID!)
 
@@ -65,8 +66,6 @@ export const useFirebase = () => {
   const updateUserInfo = async (games: firebaseGame[]) => {
     const userID = getUserId()
 
-    console.log(userID)
-
     await setDoc(doc(db, 'users', userID!), {
       games: games,
     })
@@ -74,6 +73,7 @@ export const useFirebase = () => {
 
   const logout = async () => {
     await auth.signOut()
+    localStorage.clear()
   }
 
   return {
@@ -84,5 +84,6 @@ export const useFirebase = () => {
     getUserInfo,
     updateUserInfo,
     logout,
+    auth,
   }
 }
