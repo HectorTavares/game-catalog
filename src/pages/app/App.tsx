@@ -37,7 +37,7 @@ function App(): JSX.Element {
   const { getUserInfo, updateUserInfo, logout, getUserId } = useFirebase()
   const navigate = useNavigate()
 
-  const { theme, toggleTheme } = useTheme()
+  const { theme } = useTheme()
 
   const userId = localStorage.getItem('uid')
   const fetchUserInfos = async () => {
