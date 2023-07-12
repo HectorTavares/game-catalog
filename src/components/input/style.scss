@@ -5,23 +5,34 @@
 }
 
 .input-container {
-  --timing: 0.3s;
-  --width-of-input: 500px;
-  --height-of-input: 40px;
-  --border-height: 2px;
-  --input-bg: #2a3944;
-  --border-color: #184461;
-  --border-radius: 30px;
-  --after-border-radius: 1px;
   position: relative;
-  width: var(--width-of-input);
-  height: var(--height-of-input);
+  width: 500px;
+  height: 40px;
   display: flex;
   align-items: center;
   padding-inline: 0.8em;
-  border-radius: var(--border-radius);
+  border-radius: 30px;
   transition: border-radius 0.5s ease;
-  background: var(--input-bg, #fff);
+  background: #2a3944;
+
+  &.light {
+    background: #abe1ff;
+
+    button {
+      color: #3a3a3a;
+    }
+
+    input {
+      color: #3a3a3a;
+      &::placeholder {
+        color: #5c5c5c;
+      }
+    }
+
+    &:before {
+      background: #5d98cb;
+    }
+  }
 
   &.small {
     width: 300px;
@@ -30,19 +41,19 @@
   &:before {
     content: '';
     position: absolute;
-    background: var(--border-color);
+    background: #184461;
     transform: scaleX(0);
     transform-origin: center;
     width: 100%;
-    height: var(--border-height);
+    height: 2px;
     left: 0;
     bottom: 0;
     border-radius: 1px;
-    transition: transform var(--timing) ease;
+    transition: transform 0.3s ease;
   }
 
   &:focus-within {
-    border-radius: var(--after-border-radius);
+    border-radius: 1px;
   }
 
   input:focus {

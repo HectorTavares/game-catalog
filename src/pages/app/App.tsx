@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Input, Loader, SortFilter } from '../../components'
+import { Input, Loader, SortFilter, ThemeSwitch } from '../../components'
 import { Game, firebaseGame, ratingSort, defaultRatingSortValues } from '../../types'
 import { useGamesApi } from '../../hooks'
 import { getGamesErrorMessage, parseFirebaseGameListToGameList } from '../../utils'
@@ -11,6 +11,8 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from 'react-router-dom'
 
 import { MyList } from '../../components/game-list'
+
+import { useTheme } from '../../context/themeContext'
 
 import './style.scss'
 
@@ -34,6 +36,8 @@ function App(): JSX.Element {
   const { getGames } = useGamesApi()
   const { getUserInfo, updateUserInfo, logout, getUserId } = useFirebase()
   const navigate = useNavigate()
+
+  const { theme, toggleTheme } = useTheme()
 
   const userId = localStorage.getItem('uid')
   const fetchUserInfos = async () => {
@@ -177,7 +181,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <main className='app'>
+    <main className={`app ${theme}`}>
       <Modal open={modalIsOpen} onClose={handleClose}>
         <div className='modal'>
           <p>To favorite or rate, you need to be logged in.</p>
@@ -188,6 +192,8 @@ function App(): JSX.Element {
       </Modal>
       <div className='container'>
         <div className='search-container'>
+          <ThemeSwitch />
+
           <Input
             isSearch={true}
             text={'Search'}
@@ -205,7 +211,7 @@ function App(): JSX.Element {
             </Tooltip>
           ) : null}
         </div>
-        <div className='filters'>
+        <div className={`filters ${theme}`}>
           <div className='favorite-and-sort-filters'>
             <Tooltip title='Filter only Favorited Games'>
               <div
@@ -224,7 +230,7 @@ function App(): JSX.Element {
                 <div
                   key={genre}
                   onClick={() => handleOnSelectGenre(genre)}
-                  className={`card-genre ${selectedGenre === genre ? 'selected' : ''}`}
+                  className={`card-genre  ${theme} ${selectedGenre === genre ? 'selected' : ''}`}
                 >
                   <p>{genre}</p>
                 </div>

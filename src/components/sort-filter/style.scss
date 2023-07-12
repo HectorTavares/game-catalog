@@ -11,6 +11,13 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
+    &.light {
+      background-color: $light-button-color;
+      &.selected {
+        background-color: $light-button-hover;
+      }
+    }
   }
 
   > .sort-activation {

@@ -1,33 +1,17 @@
 @import '@/styles/style.scss';
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: #1a355e00;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: $secondary-color;
-    border-radius: $border-radius;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: $button-color;
-  }
-}
-
 .app {
   background-color: $primary-color;
   min-height: 100vh;
   padding: 20px 50px;
   min-width: 320px;
+
+  &.light {
+    background-color: $light-primary-color;
+    .container > .search-container {
+      color: black;
+    }
+  }
 
   .container {
     display: flex;
@@ -57,6 +41,9 @@
       background-color: $secondary-color;
       padding: 10px;
       border-radius: $border-radius;
+      &.light {
+        background-color: $light-secondary-color;
+      }
 
       .favorite-and-sort-filters {
         display: flex;
@@ -111,6 +98,23 @@
             p {
               background-color: $button-hover;
               cursor: pointer;
+            }
+          }
+
+          &.light {
+            p {
+              background-color: $light-button-color;
+            }
+            &.selected {
+              p {
+                background-color: $light-button-hover;
+              }
+            }
+            &:hover {
+              p {
+                background-color: $light-button-hover;
+                cursor: pointer;
+              }
             }
           }
         }
@@ -233,4 +237,21 @@
       flex-wrap: wrap;
     }
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1a355e00;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $secondary-color;
+  border-radius: $border-radius;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: $button-color;
 }

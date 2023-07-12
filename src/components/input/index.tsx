@@ -1,5 +1,6 @@
 import { ChangeEventHandler } from 'react'
 import './style.scss'
+import { useTheme } from '../../context/themeContext'
 export const Input = ({
   onChange,
   value,
@@ -17,8 +18,10 @@ export const Input = ({
   type: string
   size: 'small' | 'medium'
 }) => {
+  const { theme } = useTheme()
+
   return (
-    <div className={`input-container ${size} `}>
+    <div className={`input-container ${size} ${theme}	`}>
       {isSearch ? (
         <button disabled>
           <svg

@@ -10,7 +10,7 @@ import { getAuthErrorMessage } from '../../utils'
 
 import './style.scss'
 
-export const Auth: React.FC = () => {
+function Auth(): JSX.Element {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isLogin, setIsLogin] = useState<boolean>(true)
@@ -105,3 +105,5 @@ export const Auth: React.FC = () => {
     </main>
   )
 }
+
+export default Auth

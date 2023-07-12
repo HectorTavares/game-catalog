@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { FavoriteButton } from '../../components/favorite'
 import { Avaliation } from '../avaliation'
 import { firebaseGame } from '../../types'
+import { useTheme } from '../../context/themeContext'
 
 export const Card = ({
   title,
@@ -32,6 +33,7 @@ export const Card = ({
   onRateOrFavorite: (updatedGame: firebaseGame) => void
   handleOpenModal: () => void
 }) => {
+  const { theme } = useTheme()
   const handleOnClick = (): void => {
     window.open(link, '_blank')
   }
@@ -63,18 +65,18 @@ export const Card = ({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
       layout
-      className='card'
+      className={`card ${theme}`}
     >
       <img onClick={handleOnClick} className='card-image' src={image} alt={`${title} thumbnail`} />
       <div className='card-content'>
         <h1 className='card-title'>{title}</h1>
-        <p className='card-description'>{description}</p>
+        <p className={`card-description ${theme}`}>{description}</p>
         <div className='card-details'>
           <div className='card-plataform-publisher'>
             <p>{platform}</p>
             <p>{publisher}</p>
           </div>
-          <div className='card-genre'>
+          <div className={`card-genre ${theme}`}>
             <p>{genre}</p>
           </div>
         </div>
