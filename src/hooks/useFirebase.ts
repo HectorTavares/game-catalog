@@ -73,7 +73,7 @@ export const useFirebase = () => {
 
   const logout = async () => {
     await auth.signOut()
-    localStorage.clear()
+    localStorage.removeItem('uid')
   }
 
   return {

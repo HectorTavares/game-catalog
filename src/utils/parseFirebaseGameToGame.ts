@@ -21,7 +21,5 @@ export const parseFirebaseGameListToGameList = (
     }
   })
 
-  console.log(result)
-
   return result
 }

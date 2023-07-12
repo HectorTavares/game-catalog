@@ -1,0 +1,36 @@
+@import '../../styles/style.scss';
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: $primary-color;
+}
+
+.error-page h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.error-page h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.error-page button {
+  background-color: $button-color;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+.error-page button:hover {
+  background-color: $button-hover;
+}

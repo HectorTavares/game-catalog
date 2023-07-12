@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
@@ -6,12 +6,13 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom'
-// import App from './pages/app/App.tsx'
-// import { Auth } from './pages/auth/Auth.tsx'
 import { ThemeProvider } from './context/themeContext.tsx'
-import './index.scss'
+import { Loader } from './components/index.ts'
 import { ToastContainer } from 'react-toastify'
+import { ErrorPage } from './pages/error/error-page.tsx'
 import 'react-toastify/dist/ReactToastify.css'
+
+import './index.scss'
 
 const App = lazy(() => import('./pages/app/App.tsx'))
 const Auth = lazy(() => import('./pages/auth/Auth.tsx'))
@@ -19,8 +20,8 @@ const Auth = lazy(() => import('./pages/auth/Auth.tsx'))
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path='/' element={<App />} />
-      <Route path='auth' element={<Auth />} />
+      <Route path='/' element={<App />} errorElement={<ErrorPage />} />
+      <Route path='auth' element={<Auth />} errorElement={<ErrorPage />} />
     </>
   )
 )
@@ -29,7 +30,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
       <ToastContainer />
-      <RouterProvider router={router} />
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </ThemeProvider>
   </React.StrictMode>
 )
