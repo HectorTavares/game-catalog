@@ -9,13 +9,36 @@
   height: 100vh;
   background-color: $secondary-color;
   overflow-x: hidden;
+
+  &.light {
+    background-color: $light-secondary-color;
+    > .container {
+      background-color: $light-primary-color;
+      > .auth-options {
+        color: #505050;
+        .option {
+          &.selected {
+            color: $light-button-color;
+            border-bottom: 2px solid $light-button-color;
+          }
+        }
+      }
+      > .auth-form {
+        > .button {
+          background-color: $light-button-color;
+        }
+      }
+    }
+  }
+
   > .container {
     display: flex;
     flex-direction: column;
     background-color: $primary-color;
     padding: 25px;
     border-radius: $border-radius;
-    width: 365px;
+    min-width: 310px;
+    max-width: 365px;
     height: 400px;
 
     > .auth-options {
@@ -30,7 +53,7 @@
         all: unset;
         &.selected {
           border-bottom: 2px solid $button-color;
-          color: white;
+          color: #f8f8f8;
         }
       }
     }

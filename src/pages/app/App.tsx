@@ -211,33 +211,36 @@ function App(): JSX.Element {
             </Tooltip>
           ) : null}
         </div>
-        <div className={`filters ${theme}`}>
-          <div className='favorite-and-sort-filters'>
-            <Tooltip title='Filter only Favorited Games'>
-              <div
-                onClick={() => setIsFavoriteFilter(!isFavoriteFilter)}
-                className={`card-genre favorite-filter ${isFavoriteFilter ? 'selected' : ''}`}
-              >
-                <p>Favorited</p>
-              </div>
-            </Tooltip>
-            <SortFilter value={ratingSort} setRatingSort={setRatingSort} />
-          </div>
-
-          <div className='available-genres-filter'>
-            {avaliableGenres.map((genre) => (
-              <Tooltip key={genre} title={`Filter only games that are of genre ${genre}`}>
+        {!isLoading && !errorMessage.length ? (
+          <div className={`filters ${theme}`}>
+            <div className='favorite-and-sort-filters'>
+              <Tooltip title='Filter only Favorited Games'>
                 <div
-                  key={genre}
-                  onClick={() => handleOnSelectGenre(genre)}
-                  className={`card-genre  ${theme} ${selectedGenre === genre ? 'selected' : ''}`}
+                  onClick={() => setIsFavoriteFilter(!isFavoriteFilter)}
+                  className={`card-genre favorite-filter ${isFavoriteFilter ? 'selected' : ''}`}
                 >
-                  <p>{genre}</p>
+                  <p>Favorited</p>
                 </div>
               </Tooltip>
-            ))}
+              <SortFilter value={ratingSort} setRatingSort={setRatingSort} />
+            </div>
+
+            <div className='available-genres-filter'>
+              {avaliableGenres.map((genre) => (
+                <Tooltip key={genre} title={`Filter only games that are of genre ${genre}`}>
+                  <div
+                    key={genre}
+                    onClick={() => handleOnSelectGenre(genre)}
+                    className={`card-genre  ${theme} ${selectedGenre === genre ? 'selected' : ''}`}
+                  >
+                    <p>{genre}</p>
+                  </div>
+                </Tooltip>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : null}
+
         <div className='loading-container'>{isLoading ? <Loader /> : null}</div>
 
         {!isLoading && errorMessage.length ? (

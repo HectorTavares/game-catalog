@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { getAuthErrorMessage } from '../../utils'
 
 import './style.scss'
+import { useTheme } from '../../context/themeContext'
 
 function Auth(): JSX.Element {
   const [email, setEmail] = useState<string>('')
@@ -18,6 +19,7 @@ function Auth(): JSX.Element {
   const navigate = useNavigate()
 
   const { createUser, login } = useFirebase()
+  const { theme } = useTheme()
 
   const loginAction = async () => {
     setIsLoading(true)
@@ -56,7 +58,7 @@ function Auth(): JSX.Element {
   }
 
   return (
-    <main className='auth'>
+    <main className={`auth ${theme}`}>
       <div className='container'>
         <div className='auth-options'>
           <button
