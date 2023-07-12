@@ -13,10 +13,10 @@ export function ErrorPage() {
 
   return (
     <div className='error-page'>
-      <h1>Desculpe, infelizmente ocorreu um erro inesperado 😞</h1>
-      <h2>Tente novamente mais tarde.</h2>
-      <button onClick={() => window.location.reload()}>Recarregar a página</button>
-      <button onClick={handleLogout}>Sair</button>
+      <h1>Sorry, an unexpected error occurred 😞</h1>
+      <h2>Please try again later.</h2>
+      <button onClick={() => window.location.reload()}>Reload the page</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }
