@@ -1,9 +1,11 @@
-import { ratingSort } from '../../types'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import Tooltip from '@mui/material/Tooltip'
-import './style.scss'
+
+import { ratingSort } from '../../types'
 import { useTheme } from '../../context/themeContext'
+
+import './style.scss'
 
 export const SortFilter = ({
   value,

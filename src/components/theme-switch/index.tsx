@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
-import { useState } from 'react'
+
 import { useTheme } from '../../context/themeContext'
 
 export const ThemeSwitch = () => {
   const { theme, toggleTheme } = useTheme()
-  const [value, setValue] = useState(theme === 'dark' ? true : false)
+  const [value, setValue] = useState<boolean>(theme === 'dark' ? true : false)
 
   const handleOnChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.checked)

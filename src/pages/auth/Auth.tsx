@@ -1,24 +1,25 @@
 import React, { useState, FormEvent } from 'react'
-import { Input, Loader } from '../../components'
-
-import { useFirebase } from '../../hooks/'
-import { useNavigate } from 'react-router-dom'
-
+import { Modal } from '@mui/material'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
+
+import { useFirebase } from '../../hooks/'
+import { Input, Loader } from '../../components'
 import { getAuthErrorMessage } from '../../utils'
+import { useTheme } from '../../context/themeContext'
 
 import './style.scss'
-import { useTheme } from '../../context/themeContext'
 
 function Auth(): JSX.Element {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isLogin, setIsLogin] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const navigate = useNavigate()
 
-  const { createUser, login } = useFirebase()
+  const { createUser, login, forgotPassword } = useFirebase()
   const { theme } = useTheme()
 
   const loginAction = async () => {
@@ -57,8 +58,38 @@ function Auth(): JSX.Element {
     }
   }
 
+  const handleSubmitForgotPassword = async (e: FormEvent) => {
+    e.preventDefault()
+    try {
+      forgotPassword(email)
+      toast.success('Email sent')
+      setIsModalOpen(false)
+    } catch (error: any) {
+      toast.error(getAuthErrorMessage(error.code))
+    }
+  }
+
   return (
     <main className={`auth ${theme}`}>
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className={`modal reset-password`}>
+          <form className={`reset-password-form ${theme}`} onSubmit={handleSubmitForgotPassword}>
+            <h2>Reset Password</h2>
+            <Input
+              onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+                setEmail(e.target.value)
+              }
+              value={email}
+              isSearch={false}
+              onReset={() => setEmail('')}
+              text='E-mail'
+              type='email'
+              size='small'
+            />
+            <button>Send Email</button>
+          </form>
+        </div>
+      </Modal>
       <div className='container'>
         <div className='auth-options'>
           <button
@@ -102,6 +133,9 @@ function Auth(): JSX.Element {
           <button disabled={isLoading} className='button' type='submit'>
             {isLoading ? <Loader /> : isLogin ? 'Sign in' : 'Sign up'}
           </button>
+          <p className='forgot-password' onClick={() => setIsModalOpen(true)}>
+            Forgot password?
+          </p>
         </form>
       </div>
     </main>

@@ -1,8 +1,13 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/auth'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { firebaseGame } from '../types'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from 'firebase/auth'
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
+import { firebaseGame } from '../types'
 
 export const useFirebase = () => {
   const firebaseConfig = {
@@ -76,6 +81,10 @@ export const useFirebase = () => {
     localStorage.removeItem('uid')
   }
 
+  const forgotPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email)
+  }
+
   return {
     createUser,
     login,
@@ -85,5 +94,6 @@ export const useFirebase = () => {
     updateUserInfo,
     logout,
     auth,
+    forgotPassword,
   }
 }

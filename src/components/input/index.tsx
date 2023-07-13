@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from 'react'
-import './style.scss'
 import { useTheme } from '../../context/themeContext'
+import './style.scss'
 export const Input = ({
   onChange,
   value,
@@ -43,7 +43,7 @@ export const Input = ({
         </button>
       ) : null}
       <input value={value} onChange={onChange} className='input' placeholder={text} type={type} />
-      <button onClick={onReset} className='reset' type='reset'>
+      <button tabIndex={-1} onClick={onReset} className='reset' type='reset'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className='h-6 w-6'

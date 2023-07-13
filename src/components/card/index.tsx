@@ -1,10 +1,11 @@
-import './style.scss'
 import { motion } from 'framer-motion'
 
 import { FavoriteButton } from '../../components/favorite'
 import { Avaliation } from '../avaliation'
 import { firebaseGame } from '../../types'
 import { useTheme } from '../../context/themeContext'
+
+import './style.scss'
 
 export const Card = ({
   title,

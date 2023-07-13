@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Rating from '@mui/material/Rating'
-import './style.scss'
+
 import { useFirebase } from '../../hooks'
+import './style.scss'
+
 export const Avaliation = ({
   avaliation = 0,
   onAvaliate,

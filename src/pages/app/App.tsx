@@ -1,17 +1,12 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Input, Loader, SortFilter, ThemeSwitch } from '../../components'
-import { Game, firebaseGame, ratingSort, defaultRatingSortValues } from '../../types'
-import { useGamesApi } from '../../hooks'
-import { getGamesErrorMessage, parseFirebaseGameListToGameList } from '../../utils'
-import { useFirebase } from '../../hooks'
-
-import Tooltip from '@mui/material/Tooltip'
-import Modal from '@mui/material/Modal'
+import { Tooltip, Modal } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from 'react-router-dom'
 
-import { MyList } from '../../components/game-list'
-
+import { Input, Loader, SortFilter, ThemeSwitch, GameList } from '../../components'
+import { Game, firebaseGame, ratingSort, defaultRatingSortValues } from '../../types'
+import { useGamesApi, useFirebase } from '../../hooks'
+import { getGamesErrorMessage, parseFirebaseGameListToGameList } from '../../utils'
 import { useTheme } from '../../context/themeContext'
 
 import './style.scss'
@@ -74,8 +69,8 @@ function App(): JSX.Element {
 
   const fetchGames = async (): Promise<void> => {
     try {
-      const gamesPromise = getGames() // Requisição para obter os jogos
-      const userGamesPromise = fetchUserInfos() // Requisição para obter informações do usuário
+      const gamesPromise = getGames()
+      const userGamesPromise = fetchUserInfos()
 
       const [games, userGames] = await Promise.all([gamesPromise, userGamesPromise])
       let gamesToSave = games.data
@@ -253,7 +248,7 @@ function App(): JSX.Element {
             </div>
           </div>
         ) : null}
-        <MyList
+        <GameList
           filteredGames={filteredGames}
           onRateOrFavorite={updateUserInformation}
           handleOpenModal={handleOpen}

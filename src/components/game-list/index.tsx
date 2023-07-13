@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
+
 import { Game, firebaseGame } from '../../types'
 import { Card } from '../card'
-import { Loader } from '..'
+import { Loader } from '../loader'
 
-export const MyList = ({
+const defaultVisibleItensValue = 12
+
+export const GameList = ({
   filteredGames,
   onRateOrFavorite,
   handleOpenModal,
@@ -13,11 +16,10 @@ export const MyList = ({
   onRateOrFavorite: (updatedGame: firebaseGame) => void
   handleOpenModal: () => void
 }) => {
-  const [visibleItems, setVisibleItems] = useState(12)
+  const [visibleItems, setVisibleItems] = useState<number>(defaultVisibleItensValue)
   const itemsPerPage = 12
 
   const fetchMoreData = () => {
-    // Simule o carregamento progressivo dos itens
     setTimeout(() => {
       setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerPage)
     }, 1000)
