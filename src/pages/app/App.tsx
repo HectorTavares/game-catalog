@@ -24,9 +24,8 @@ function App(): JSX.Element {
   const [searchText, setSearchText] = useState<string>('')
   const [isFavoriteFilter, setIsFavoriteFilter] = useState<boolean>(false)
   const [ratingSort, setRatingSort] = useState<ratingSort>(defaultRatingSortValues)
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-  const handleOpen = () => setModalIsOpen(true)
-  const handleClose = () => setModalIsOpen(false)
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const { getGames } = useGamesApi()
   const { getUserInfo, updateUserInfo, logout, getUserId } = useFirebase()
@@ -177,8 +176,8 @@ function App(): JSX.Element {
 
   return (
     <main className={`app ${theme}`}>
-      <Modal open={modalIsOpen} onClose={handleClose}>
-        <div className='modal'>
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className={`modal ${theme}`}>
           <p>To favorite or rate, you need to be logged in.</p>
           <div className='modal-buttons'>
             <button onClick={() => navigate('/auth')}>Login</button>
@@ -251,7 +250,7 @@ function App(): JSX.Element {
         <GameList
           filteredGames={filteredGames}
           onRateOrFavorite={updateUserInformation}
-          handleOpenModal={handleOpen}
+          handleOpenModal={() => setIsModalOpen(true)}
         />
       </div>
     </main>
