@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Tooltip } from '@mui/material'
 
 import { FavoriteButton } from '../../components/favorite'
 import { Avaliation } from '../avaliation'
@@ -68,7 +69,14 @@ export const Card = ({
       layout
       className={`card ${theme}`}
     >
-      <img onClick={handleOnClick} className='card-image' src={image} alt={`${title} thumbnail`} />
+      <Tooltip title={`Click to play ${title}`}>
+        <img
+          onClick={handleOnClick}
+          className='card-image'
+          src={image}
+          alt={`${title} thumbnail`}
+        />
+      </Tooltip>
       <div className='card-content'>
         <h1 className='card-title'>{title}</h1>
         <p className={`card-description ${theme}`}>{description}</p>

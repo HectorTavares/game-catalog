@@ -24,7 +24,6 @@ function App(): JSX.Element {
   const [searchText, setSearchText] = useState<string>('')
   const [isFavoriteFilter, setIsFavoriteFilter] = useState<boolean>(false)
   const [ratingSort, setRatingSort] = useState<ratingSort>(defaultRatingSortValues)
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const { getGames } = useGamesApi()
@@ -129,12 +128,23 @@ function App(): JSX.Element {
     }
 
     if (ratingSort.isActivated) {
-      newFilteredGames = newFilteredGames.sort((a: Game, b: Game) => {
-        if (a.rating > b.rating) {
-          return ratingSort.isDesc ? -1 : 1
-        } else {
-          return ratingSort.isDesc ? 1 : -1
+      newFilteredGames.sort((a, b) => {
+        const isARatingAbove05 = a.rating >= 0.5
+        const isBRatingAbove05 = b.rating >= 0.5
+
+        if (isARatingAbove05 && !isBRatingAbove05) {
+          return -1
+        } else if (!isARatingAbove05 && isBRatingAbove05) {
+          return 1
+        } else if (isARatingAbove05 && isBRatingAbove05) {
+          if (a.rating > b.rating) {
+            return ratingSort.isDesc ? -1 : 1
+          } else if (a.rating < b.rating) {
+            return ratingSort.isDesc ? 1 : -1
+          }
         }
+
+        return 0
       })
     }
 
