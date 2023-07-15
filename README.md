@@ -1,6 +1,7 @@
 # Game Catalog
 
 #### Este é um projeto que implementa um catálogo de jogos. Ele permite que você visualize diferentes jogos e suas informações, como título, gênero, plataforma e publicadora.
+#### É permitido também, se realizar login, favoritar e dar notas para cada um dos jogos, e filtrar eles para ver apenas os que foram favoritados e ordenar pelas notas.
 #### O Projeto foi publicado na vercel e pode ser acessado por [aqui](https://hctr-game-catalog.vercel.app/).
 #### Segue o passo a passo para rodar o projeto localmente.
 
@@ -49,8 +50,9 @@ O servidor será iniciado e o aplicativo estará disponível em http://localhost
 
 Abaixo está uma demonstração da página sem a utilização de nenhum filtro:
 
-![Demonstração sem filtro](https://github.com/HectorTavares/game-catalog/assets/63106769/67c2dee6-e1d2-4487-bf6d-5b53ce1e388d)
+![Demonstração sem filtro](https://github.com/HectorTavares/game-catalog/assets/63106769/cc3f9073-2c55-4ab3-8ea4-db77f12a602b)
 
-Abaixo está uma demonstração da página utilizando o filtro de gênero, com a opção "Card Game" selecionada, e o filtro de título com "lEgE":
 
-![Demonstração com filtro](https://github.com/HectorTavares/game-catalog/assets/63106769/46d0a9b0-9a69-487e-b025-7008dd829c69)
+Abaixo está uma demonstração da página utilizando o filtro de gênero, com a opção "Card Game" selecionada, o filtro de título com "le", o filtro de favoritos ativado e a ordenação por nota em ordem ascendente:
+
+![Demonstração com filtro](https://github.com/HectorTavares/game-catalog/assets/63106769/4f28d3ec-0da9-4b73-9621-d51afbb373dc)
